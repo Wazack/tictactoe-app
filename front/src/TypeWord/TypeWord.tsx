@@ -8,11 +8,11 @@ function TypeWord(props: any) {
     const [currWordIndex, setCurrWordIndex] = useState(0)
     const [currCharIndex, setCurrCharIndex] = useState<number>(-1);
 
-    const checkCharClass = (charIdx: number, currChar: string) => {
-        if (charIdx === inputValue.length - 1 && currChar === inputValue.substr(inputValue.length - 1)) {
+    const checkCharClass = (charIdx: number, currChar: string, wordIdx: number) => {
+        if (wordIdx === currWordIndex && charIdx === inputValue.length - 1 && currChar === inputValue.substr(inputValue.length - 1)) {
             return 'good-char';
         }
-        else if (charIdx === inputValue.length - 1 && currChar !== inputValue.substr(inputValue.length - 1)) {
+        else if (wordIdx === currWordIndex && charIdx === inputValue.length - 1 && currChar !== inputValue.substr(inputValue.length - 1)) {
             return 'bad-char';
         }
         else
@@ -26,14 +26,14 @@ function TypeWord(props: any) {
         return doesItMatch;
     }
 
-    const handleKeyDown = ({ keyCode }: any) => {
-        if (keyCode === 32) {
+    const handleKeyDown = (e : any) => {
+        if (e.keyCode === 32) {
             if (checkMatch() == true) {
                 setInputValue("")
                 setCurrWordIndex(currWordIndex + 1)
-            } else {
-                setInputValue("")
             }
+            else
+                setInputValue("")
         }
     }
 
@@ -44,14 +44,14 @@ function TypeWord(props: any) {
                     <span key={i}>
                         <span>
                             {word.split("").map((char, idx) => (
-                                <span className={checkCharClass(idx, char)} key={idx}>{char}</span>
+                                <span className={checkCharClass(idx, char, i)} key={idx}>{char}</span>
                             ))}
                         </span>
                         <span> </span>
                     </span>
                 ))}
             </div>
-            <input onKeyDown={handleKeyDown} value={inputValue} onChange={(e) => { setInputValue(e.currentTarget.value) }} type="text" />
+            <input onKeyUp={handleKeyDown} onChange={(e) => { setInputValue(e.currentTarget.value) }} value={inputValue} type="text" />
         </div>
     )
 }
