@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import './Board.scss';
 
 function Board(props: any) {
@@ -8,6 +8,37 @@ function Board(props: any) {
         '', '', '',
         '', '', ''
     ]);
+
+    useEffect(() => {
+        const checkRow = () => {
+            let ret = null;
+            for (let i = 0; i < 9; i += 3) {
+                if (data[i] == data[i + 1] && data[i] == data[i + 2] && data[i] != '')
+                    ret = data[i];
+            }
+            return ret;
+        }
+        const chekColumn = () => {
+            let ret = null;
+            for (let i = 0; i < 3; i++) {
+                if (data[i] == data[i + 3] && data[i] == data[i + 6] && data[i] != '')
+                    ret = data[i];
+            }
+            return ret;
+        }
+        const checkDiagonal = () => {
+            if ((data[0] == data[4] && data[0] == data[9] || data[2] == data[4] && data[2] == data[6]) && data[4] != '')
+                return data[4];
+            return null;
+        }
+
+        const checkWin = () => {
+            return (checkDiagonal() || checkRow() || chekColumn())
+        }
+
+        const ret = checkWin();
+        console.log(ret);
+    })
 
     const test = (e: any, index: number) => {
         if (props.yourTurn) {

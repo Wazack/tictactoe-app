@@ -7,7 +7,7 @@ import TypeWord from './TypeWord/TypeWord';
 function App() {
 
   const [yourTurn, setYourTurn] = useState(false);
-  const [words, setWords] = useState<string[][]>([randomWords(5), randomWords(5), randomWords(5)])
+  const [words, setWords] = useState<string[][]>([randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5)])
 
   return (
     <div className="App">
