@@ -3,6 +3,8 @@ import './Board.scss';
 
 function Board(props: any) {
 
+    const [symbol, setSymbol] = useState('X');
+
     const [data, setData] = useState([
         '', '', '',
         '', '', '',
@@ -36,14 +38,23 @@ function Board(props: any) {
             return (checkDiagonal() || checkRow() || chekColumn())
         }
 
+        const checkTie = () => {
+            let count = 0;
+            for (let i = 0; i < 9; i++) {
+                if (data[i] != '')
+                    count++;
+            }
+            return (count === 9)
+        }
+
         const ret = checkWin();
         console.log(ret);
     })
 
-    const test = (e: any, index: number) => {
-        if (props.yourTurn) {
-            e.target.innerText = 'X';
-            data[index - 1] = 'X';
+    const putSymbol = (e: any, index: number) => {
+        if (props.yourTurn && e.target.innerText == '') {
+            e.target.innerText = symbol;
+            data[index - 1] = symbol;
             props.setYourTurn(false);
         }
     }
@@ -51,15 +62,15 @@ function Board(props: any) {
     return (
         <section>
             <div className="board">
-                <div className="input-1" onClick={(e) => test(e, 1)}></div>
-                <div className="input-2" onClick={(e) => test(e, 2)}></div>
-                <div className="input-3" onClick={(e) => test(e, 3)}></div>
-                <div className="input-4" onClick={(e) => test(e, 4)}></div>
-                <div className="input-5" onClick={(e) => test(e, 5)}></div>
-                <div className="input-6" onClick={(e) => test(e, 6)}></div>
-                <div className="input-7" onClick={(e) => test(e, 7)}></div>
-                <div className="input-8" onClick={(e) => test(e, 8)}></div>
-                <div className="input-9" onClick={(e) => test(e, 9)}></div>
+                <div className="input-1" onClick={(e) => putSymbol(e, 1)}></div>
+                <div className="input-2" onClick={(e) => putSymbol(e, 2)}></div>
+                <div className="input-3" onClick={(e) => putSymbol(e, 3)}></div>
+                <div className="input-4" onClick={(e) => putSymbol(e, 4)}></div>
+                <div className="input-5" onClick={(e) => putSymbol(e, 5)}></div>
+                <div className="input-6" onClick={(e) => putSymbol(e, 6)}></div>
+                <div className="input-7" onClick={(e) => putSymbol(e, 7)}></div>
+                <div className="input-8" onClick={(e) => putSymbol(e, 8)}></div>
+                <div className="input-9" onClick={(e) => putSymbol(e, 9)}></div>
             </div>
         </section>
     )

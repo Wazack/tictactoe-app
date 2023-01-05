@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import './TypeWord.scss'
 
 function TypeWord(props: any) {
@@ -7,6 +7,11 @@ function TypeWord(props: any) {
     const [inputValue, setInputValue] = useState("");
     const [currWordIndex, setCurrWordIndex] = useState(0);
     const [isGoodWord, setIsGoodWord] = useState(true);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, [props.yourTurn])
 
     const checkCharClass = (charIdx: number, currChar: string, wordIdx: number) => {
         if (wordIdx === currWordIndex && charIdx === inputValue.length - 1 && currChar === inputValue.substr(inputValue.length - 1)) {
@@ -57,7 +62,7 @@ function TypeWord(props: any) {
                     </span>
                 ))}
             </div>
-            <input className={`${!isGoodWord ? "wrong-word" : ""}`} onKeyUp={handleKeyDown} onChange={(e) => { setInputValue(e.currentTarget.value); if (!isGoodWord) setIsGoodWord(true) }} value={inputValue} type="text" />
+            <input ref={inputRef} className={`${!isGoodWord ? "wrong-word" : ""}`} onKeyUp={handleKeyDown} onChange={(e) => { setInputValue(e.currentTarget.value); if (!isGoodWord) setIsGoodWord(true) }} value={inputValue} type="text" />
         </div>
     )
 }
