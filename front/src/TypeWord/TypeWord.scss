@@ -1,10 +1,53 @@
 .type-word {
     .display-word {
         .good-char {
-            background: green;
+            color: green;
         }
         .bad-char {
-            background: red;
+            color: red;
         }
     }
+
+    .wrong-word {
+        animation: bounce .5s;
+    }
+
+    &.hidden {
+        display: none;
+    }
+
+    @keyframes bounce {
+        0% {
+          transform: translateX(0px);
+          timing-function: ease-in;
+        }
+        37% {
+          transform: translateX(5px);
+          timing-function: ease-out;
+        }
+        55% {
+          transform: translateX(-5px);
+          timing-function: ease-in;
+        }
+        73% {
+          transform: translateX(4px);
+          timing-function: ease-out;
+        }
+        82% {
+          transform: translateX(-4px);
+          timing-function: ease-in;
+        }
+        91% {
+          transform: translateX(2px);
+          timing-function: ease-out;
+        }
+        96% {
+          transform: translateX(-2px);
+          timing-function: ease-in;
+        }
+        100% {
+          transform: translateX(0px);
+          timing-function: ease-in;
+        }
+      }
 }
