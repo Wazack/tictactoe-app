@@ -4,7 +4,7 @@ import './GamePage.scss';
 import Board from './Board/Board';
 import TypeWord from './TypeWord/TypeWord';
 
-function GamePage() {
+function GamePage(props: any) {
 
   const [yourTurn, setYourTurn] = useState(false);
   const [words, setWords] = useState<string[][]>([randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5)])
