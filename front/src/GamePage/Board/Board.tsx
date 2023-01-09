@@ -5,32 +5,26 @@ function Board(props: any) {
 
     const [symbol, setSymbol] = useState('X');
 
-    const [data, setData] = useState([
-        '', '', '',
-        '', '', '',
-        '', '', ''
-    ]);
-
     useEffect(() => {
         const checkRow = () => {
             let ret = null;
             for (let i = 0; i < 9; i += 3) {
-                if (data[i] == data[i + 1] && data[i] == data[i + 2] && data[i] != '')
-                    ret = data[i];
+                if (props.data[i] == props.data[i + 1] && props.data[i] == props.data[i + 2] && props.data[i] != '')
+                    ret = props.data[i];
             }
             return ret;
         }
         const chekColumn = () => {
             let ret = null;
             for (let i = 0; i < 3; i++) {
-                if (data[i] == data[i + 3] && data[i] == data[i + 6] && data[i] != '')
-                    ret = data[i];
+                if (props.data[i] == props.data[i + 3] && props.data[i] == props.data[i + 6] && props.data[i] != '')
+                    ret = props.data[i];
             }
             return ret;
         }
         const checkDiagonal = () => {
-            if ((data[0] == data[4] && data[0] == data[9] || data[2] == data[4] && data[2] == data[6]) && data[4] != '')
-                return data[4];
+            if ((props.data[0] == props.data[4] && props.data[0] == props.data[9] || props.data[2] == props.data[4] && props.data[2] == props.data[6]) && props.data[4] != '')
+                return props.data[4];
             return null;
         }
 
@@ -41,7 +35,7 @@ function Board(props: any) {
         const checkTie = () => {
             let count = 0;
             for (let i = 0; i < 9; i++) {
-                if (data[i] != '')
+                if (props.data[i] != '')
                     count++;
             }
             return (count === 9)
@@ -52,9 +46,10 @@ function Board(props: any) {
     })
 
     const putSymbol = (e: any, index: number) => {
-        if (props.yourTurn && e.target.innerText == '') {
+        console.log(e.target.innerText)
+        if (props.yourTurn) {
             e.target.innerText = symbol;
-            data[index - 1] = symbol;
+            props.data[index - 1] = symbol;
             props.setYourTurn(false);
         }
     }
@@ -62,15 +57,15 @@ function Board(props: any) {
     return (
         <section>
             <div className="board">
-                <div className="input-1" onClick={(e) => putSymbol(e, 1)}></div>
-                <div className="input-2" onClick={(e) => putSymbol(e, 2)}></div>
-                <div className="input-3" onClick={(e) => putSymbol(e, 3)}></div>
-                <div className="input-4" onClick={(e) => putSymbol(e, 4)}></div>
-                <div className="input-5" onClick={(e) => putSymbol(e, 5)}></div>
-                <div className="input-6" onClick={(e) => putSymbol(e, 6)}></div>
-                <div className="input-7" onClick={(e) => putSymbol(e, 7)}></div>
-                <div className="input-8" onClick={(e) => putSymbol(e, 8)}></div>
-                <div className="input-9" onClick={(e) => putSymbol(e, 9)}></div>
+                <div className="input-1" onClick={(e) => putSymbol(e, 1)}>{props.data[0]}</div>
+                <div className="input-2" onClick={(e) => putSymbol(e, 2)}>{props.data[1]}</div>
+                <div className="input-3" onClick={(e) => putSymbol(e, 3)}>{props.data[2]}</div>
+                <div className="input-4" onClick={(e) => putSymbol(e, 4)}>{props.data[3]}</div>
+                <div className="input-5" onClick={(e) => putSymbol(e, 5)}>{props.data[4]}</div>
+                <div className="input-6" onClick={(e) => putSymbol(e, 6)}>{props.data[5]}</div>
+                <div className="input-7" onClick={(e) => putSymbol(e, 7)}>{props.data[6]}</div>
+                <div className="input-8" onClick={(e) => putSymbol(e, 8)}>{props.data[7]}</div>
+                <div className="input-9" onClick={(e) => putSymbol(e, 9)}>{props.data[8]}</div>
             </div>
         </section>
     )
