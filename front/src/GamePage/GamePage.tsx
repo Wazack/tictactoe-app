@@ -1,60 +1,106 @@
 import randomWords from 'random-words';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './GamePage.scss';
 import Board from './Board/Board';
 import TypeWord from './TypeWord/TypeWord';
-import Minimax from '../Minimax/Minimax';
 
 function GamePage(props: any) {
 
   const [yourTurn, setYourTurn] = useState(false);
   const [words, setWords] = useState<string[][]>([randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5)])
-  const [grid, setGrid] = useState([
-    'O', 1, 'O',
+  const [grid, setGrid] = useState<any[]>([
+    0, 1, 2,
     3, 4, 5,
     6, 7, 8
 ]);
 
-  const checkRow = (data: any) => {
-      let ret = null;
-      for (let i = 0; i < 9; i += 3) {
-          if (data[i] == data[i + 1] && data[i] == data[i + 2] && typeof data[i])
-              ret = data[i];
-      }
-      return ret;
-  }
-  const chekColumn = (data: any) => {
-      let ret = null;
-      for (let i = 0; i < 3; i++) {
-          if (data[i] == data[i + 3] && data[i] == data[i + 6])
-              ret = data[i];
-      }
-      return ret;
-  }
-  const checkDiagonal = (data: any) => {
-      if (data[0] == data[4] && data[0] == data[9] || data[2] == data[4] && data[2] == data[6])
-          return data[4];
-      return null;
-  }
+    function winning(board: any, player: string){
+        if (
+        (board[0] == player && board[1] == player && board[2] == player) ||
+        (board[3] == player && board[4] == player && board[5] == player) ||
+        (board[6] == player && board[7] == player && board[8] == player) ||
+        (board[0] == player && board[3] == player && board[6] == player) ||
+        (board[1] == player && board[4] == player && board[7] == player) ||
+        (board[2] == player && board[5] == player && board[8] == player) ||
+        (board[0] == player && board[4] == player && board[8] == player) ||
+        (board[2] == player && board[4] == player && board[6] == player)
+        ) {
+        return true;
+        } else {
+        return false;
+        }
+    }
 
-  const checkWin = (data: any) => {
-      return (checkDiagonal(data) || checkRow(data) || chekColumn(data))
-  }
+    var huPlayer: string = 'O';
+    var aiPlayer: string = 'X';
 
-  const checkTie = (data: any) => {
-      let count = 0;
-      for (let i = 0; i < 9; i++) {
-          if (typeof data[i] != 'number')
-              count++;
-      }
-      return (count === 9)
-  }
+    const emptyIndexies = (board: any) => {
+        return board.filter((s: string | number) => s != 'O' && s != 'X')
+    }
+
+    const minimax_algo = (newGrid: any, player: string) => {
+        var availSpots = emptyIndexies(newGrid);
+
+        if (winning(newGrid, huPlayer))
+            return {index: -1, score: -10};
+        else if (winning(newGrid, aiPlayer))
+            return {index: -1, score: 10};
+        else if (availSpots.length == 0)
+            return {index: -1, score: 0};
+        
+        var moves = [];
+
+        for (var i = 0; i < availSpots.length; i++) {
+            var move = {index: 0, score: 0};
+            move.index = newGrid[availSpots[i]]
+            newGrid[availSpots[i]] = player;
+            if (player == aiPlayer) {
+                var result = minimax_algo(newGrid, huPlayer);
+                if (result)
+                    move.score = result.score;
+            } else {
+                var result = minimax_algo(newGrid, aiPlayer);
+                if (result)
+                    move.score = result.score;
+            }
+            newGrid[availSpots[i]] = move.index;
+            moves.push(move);
+        }
+        var bestMove = 0;
+        if (player == aiPlayer) {
+            var bestScore = -10000;
+            for (var i = 0; i < moves.length; i++){
+                if (moves[i].score > bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        } else {
+            var bestScore = 10000;
+            for (var i = 0; i < moves.length; i++) {
+                if (moves[i].score < bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        }
+        return moves[bestMove];
+    }
+    
+    useEffect(() => {
+        const interval = setInterval(() => {
+            var index = minimax_algo(grid, 'X')
+            grid[index.index] = 'X'
+            setGrid([...grid]);
+            console.log(index)
+        }, 10000);
+        return () => clearInterval(interval);
+    }, [grid, setGrid, setYourTurn]);
 
   return (
     <div className="game-page">
       <Board yourTurn={yourTurn} setYourTurn={setYourTurn} data={grid} />
       <TypeWord yourTurn={yourTurn} setYourTurn={setYourTurn} words={words}/>
-      <Minimax data={grid} setData={setGrid} checkWin={checkWin} checkTie={checkTie} />
     </div>
   );
 }

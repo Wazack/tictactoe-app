@@ -5,46 +5,6 @@ function Board(props: any) {
 
     const [symbol, setSymbol] = useState('O');
 
-    useEffect(() => {
-        const checkRow = () => {
-            let ret = null;
-            for (let i = 0; i < 9; i += 3) {
-                if (props.data[i] == props.data[i + 1] && props.data[i] == props.data[i + 2] && props.data[i] != '')
-                    ret = props.data[i];
-            }
-            return ret;
-        }
-        const chekColumn = () => {
-            let ret = null;
-            for (let i = 0; i < 3; i++) {
-                if (props.data[i] == props.data[i + 3] && props.data[i] == props.data[i + 6] && props.data[i] != '')
-                    ret = props.data[i];
-            }
-            return ret;
-        }
-        const checkDiagonal = () => {
-            if ((props.data[0] == props.data[4] && props.data[0] == props.data[9] || props.data[2] == props.data[4] && props.data[2] == props.data[6]) && props.data[4] != '')
-                return props.data[4];
-            return null;
-        }
-
-        const checkWin = () => {
-            return (checkDiagonal() || checkRow() || chekColumn())
-        }
-
-        const checkTie = () => {
-            let count = 0;
-            for (let i = 0; i < 9; i++) {
-                if (props.data[i] != '')
-                    count++;
-            }
-            return (count === 9)
-        }
-
-        const ret = checkWin();
-        console.log(ret);
-    })
-
     const putSymbol = (e: any, index: number) => {
         console.log(e.target.innerText)
         if (props.yourTurn) {
