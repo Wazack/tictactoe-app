@@ -28,8 +28,6 @@ function GamePage(props: any) {
     } else {
         aiSpeed = lengthWords * 60000 / 250
     }
-    console.log(indexWord);
-    console.log(lengthWords);
 
     function winning(board: any, player: string){
         if (
@@ -104,15 +102,15 @@ function GamePage(props: any) {
         return moves[bestMove];
     }
     
-    useEffect(() => {
-        const interval = setInterval(() => {
-            var index = minimax_algo(grid, 'X')
-            grid[index.index] = 'X'
-            setGrid([...grid]);
-            setIndexWord(indexWord + 1);
-        }, aiSpeed);
-        return () => clearInterval(interval);
-    }, [grid]);
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         var index = minimax_algo(grid, 'X')
+    //         grid[index.index] = 'X'
+    //         setGrid([...grid]);
+    //         setIndexWord(indexWord + 1);
+    //     }, aiSpeed);
+    //     return () => clearInterval(interval);
+    // }, [grid]);
 
   return (
     <div className="game-page">
