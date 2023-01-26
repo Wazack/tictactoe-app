@@ -3,7 +3,7 @@ import './Board.scss';
 
 function Board(props: any) {
 
-    const [symbol, setSymbol] = useState('X');
+    const [symbol, setSymbol] = useState('O');
 
     useEffect(() => {
         const checkRow = () => {

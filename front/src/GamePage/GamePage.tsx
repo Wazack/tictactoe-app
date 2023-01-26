@@ -10,7 +10,7 @@ function GamePage(props: any) {
   const [yourTurn, setYourTurn] = useState(false);
   const [words, setWords] = useState<string[][]>([randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5)])
   const [grid, setGrid] = useState([
-    0, 1, 2,
+    'O', 1, 'O',
     3, 4, 5,
     6, 7, 8
 ]);

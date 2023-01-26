@@ -2,51 +2,85 @@ import { useEffect } from "react";
 
 function Minimax(props: any) {
 
-    var AIMove = 0;
+    var huPlayer: string = 'O';
+    var aiPlayer: string = 'X';
 
-    const noName = (newGrid: any, player: string) => {
-        const available = (newGrid.filter((a: any) => {
-            return (typeof a === 'number')
-        }))
-
-        var Moves = [];
-        var Scores: number[] = [];
-
-        if (props.checkWin(newGrid))
-            return (1);
-        else if (props.checkTie(newGrid))
-            return (1);
-
-        for (let i = 0; i < available.length; i++) {
-            let move = newGrid[available[i]];
-            newGrid[available[i]] = player;
-            if (player == 'O')
-                Scores.push(noName(newGrid, 'X'))
-            else
-                Scores.push(noName(newGrid, 'O'))
-            newGrid[available[i]] = move;
-            Moves.push(move);
-        }
-        if (player === 'X') {
-            let highScore = Math.max(...Scores);
-            let highScoreIndex = Scores.indexOf(highScore)
-            AIMove = Moves[highScoreIndex];
-            return Scores[highScoreIndex]
+    function winning(board: any, player: string){
+        if (
+        (board[0] == player && board[1] == player && board[2] == player) ||
+        (board[3] == player && board[4] == player && board[5] == player) ||
+        (board[6] == player && board[7] == player && board[8] == player) ||
+        (board[0] == player && board[3] == player && board[6] == player) ||
+        (board[1] == player && board[4] == player && board[7] == player) ||
+        (board[2] == player && board[5] == player && board[8] == player) ||
+        (board[0] == player && board[4] == player && board[8] == player) ||
+        (board[2] == player && board[4] == player && board[6] == player)
+        ) {
+        return true;
         } else {
-            let lowScore = Math.min(...Scores);
-            let lowScoreIndex = Scores.indexOf(lowScore)
-            AIMove = Moves[lowScoreIndex];
-            return Scores[lowScoreIndex]
+        return false;
         }
+       }
+
+    const emptyIndexies = (board: any) => {
+        return board.filter((s: string | number) => s != 'O' && s != 'X')
     }
 
+    const noName = (newGrid: any, player: string) => {
+        var availSpots = emptyIndexies(newGrid);
+
+        if (winning(newGrid, huPlayer))
+            return {index: -1, score: -10};
+        else if (winning(newGrid, aiPlayer))
+            return {index: -1, score: 10};
+        else if (availSpots.length == 0)
+            return {index: -1, score: 0};
+        
+        var moves = [];
+
+        for (var i = 0; i < availSpots.length; i++) {
+            var move = {index: 0, score: 0};
+            move.index = newGrid[availSpots[i]]
+            newGrid[availSpots[i]] = player;
+            if (player == aiPlayer) {
+                var result = noName(newGrid, huPlayer);
+                if (result)
+                    move.score = result.score;
+            } else {
+                var result = noName(newGrid, aiPlayer);
+                if (result)
+                    move.score = result.score;
+            }
+            newGrid[availSpots[i]] = move.index;
+            moves.push(move);
+        }
+        var bestMove = 0;
+        if (player == aiPlayer) {
+            var bestScore = -10000;
+            for (var i = 0; i < moves.length; i++){
+                if (moves[i].score > bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        } else {
+            var bestScore = 10000;
+            for (var i = 0; i < moves.length; i++) {
+                if (moves[i].score < bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        }
+        return moves[bestMove];
+    }
+    
     useEffect(() => {
         const interval = setInterval(() => {
-            noName(props.data, 'O')
-            props.data[AIMove] = 'O';
+            var index = noName(props.data, 'X')
+            props.data[index.index] = 'X'
             props.setData([...props.data]);
-            console.log('AIMove: ' + AIMove)
-        }, 10000);
+        }, 2000);
         return () => clearInterval(interval);
     }, []);
 
