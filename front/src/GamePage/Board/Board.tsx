@@ -6,8 +6,7 @@ function Board(props: any) {
     const [symbol, setSymbol] = useState('O');
 
     const putSymbol = (e: any, index: number) => {
-        console.log(e.target.innerText)
-        if (props.yourTurn) {
+        if (props.yourTurn && typeof props.data[index - 1] === 'number') {
             e.target.innerText = symbol;
             props.data[index - 1] = symbol;
             props.setYourTurn(false);

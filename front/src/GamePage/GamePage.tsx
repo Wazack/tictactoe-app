@@ -6,13 +6,30 @@ import TypeWord from './TypeWord/TypeWord';
 
 function GamePage(props: any) {
 
-  const [yourTurn, setYourTurn] = useState(false);
-  const [words, setWords] = useState<string[][]>([randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5)])
-  const [grid, setGrid] = useState<any[]>([
+    const [yourTurn, setYourTurn] = useState(false);
+    const [words, setWords] = useState<string[][]>([randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5)])
+    const [indexWord, setIndexWord] = useState(0);
+    const [grid, setGrid] = useState<any[]>([
     0, 1, 2,
     3, 4, 5,
     6, 7, 8
-]);
+    ]);
+
+    var aiSpeed = 10000;
+
+    let lengthWords = 0
+    for (var i = 0; i < 5; i++) {
+        lengthWords += words[indexWord][i].length + 1;
+    }
+    if (props.difficulty == 1) {
+        aiSpeed = lengthWords * 60000 / 150
+    } else if (props.difficulty == 2) {
+        aiSpeed = lengthWords * 60000 / 200
+    } else {
+        aiSpeed = lengthWords * 60000 / 250
+    }
+    console.log(indexWord);
+    console.log(lengthWords);
 
     function winning(board: any, player: string){
         if (
@@ -92,10 +109,10 @@ function GamePage(props: any) {
             var index = minimax_algo(grid, 'X')
             grid[index.index] = 'X'
             setGrid([...grid]);
-            console.log(index)
-        }, 10000);
+            setIndexWord(indexWord + 1);
+        }, aiSpeed);
         return () => clearInterval(interval);
-    }, [grid, setGrid, setYourTurn]);
+    }, [grid]);
 
   return (
     <div className="game-page">
