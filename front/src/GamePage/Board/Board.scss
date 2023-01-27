@@ -6,14 +6,16 @@ section {
     .board {
         display: flex;
         background: #763AD6;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         border-radius: 10px;
-        padding: 5px;
+        padding: 12px;
         flex-direction: column;
-        gap: 10px;
+        gap: 16px;
         .row {
             display: flex;
-            gap: 5px;
+            gap: 12px;
             [class^=input] {
+                box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -22,10 +24,10 @@ section {
                 background: #3F2C82;
                 width: $square-width;
                 height: $square-width;
+                svg {
+                    width: 75px;
+                }
             }
         }
-        // width: 156px;
-        // flex-wrap: wrap;
-        // gap: 10px;
     }
 }

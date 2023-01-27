@@ -1,53 +1,85 @@
 .type-word {
-    .display-word {
-        .good-char {
-            color: green;
-        }
-        .bad-char {
-            color: red;
-        }
-    }
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 13px auto;
+	padding: 5px 0 10px 0;
+	max-width: 348px;
+	border-radius: 10px;
+	background: #763AD6;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	.display-word {
+		font-size: 20px;
+		color: white;
+		.good-char {
+			color: green;
+		}
 
-    .wrong-word {
-        animation: bounce .5s;
-    }
+		.bad-char {
+			color: red;
+		}
+	}
 
-    &.hidden {
-        display: none;
-    }
+	.wrong-word {
+		animation: bounce .5s;
+	}
 
-    @keyframes bounce {
-        0% {
-          transform: translateX(0px);
-          timing-function: ease-in;
-        }
-        37% {
-          transform: translateX(5px);
-          timing-function: ease-out;
-        }
-        55% {
-          transform: translateX(-5px);
-          timing-function: ease-in;
-        }
-        73% {
-          transform: translateX(4px);
-          timing-function: ease-out;
-        }
-        82% {
-          transform: translateX(-4px);
-          timing-function: ease-in;
-        }
-        91% {
-          transform: translateX(2px);
-          timing-function: ease-out;
-        }
-        96% {
-          transform: translateX(-2px);
-          timing-function: ease-in;
-        }
-        100% {
-          transform: translateX(0px);
-          timing-function: ease-in;
-        }
-      }
+	&.hidden {
+		display: none;
+	}
+
+	input {
+		border: none;
+		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+		border-radius: 10px;
+		outline: none;
+		margin-top: 10px;
+		padding: 10px 5px;
+		background: #3F2C82;
+		color: white;
+		font-size: 20px;
+	}
+
+	@keyframes bounce {
+		0% {
+			transform: translateX(0px);
+			timing-function: ease-in;
+		}
+
+		37% {
+			transform: translateX(5px);
+			timing-function: ease-out;
+		}
+
+		55% {
+			transform: translateX(-5px);
+			timing-function: ease-in;
+		}
+
+		73% {
+			transform: translateX(4px);
+			timing-function: ease-out;
+		}
+
+		82% {
+			transform: translateX(-4px);
+			timing-function: ease-in;
+		}
+
+		91% {
+			transform: translateX(2px);
+			timing-function: ease-out;
+		}
+
+		96% {
+			transform: translateX(-2px);
+			timing-function: ease-in;
+		}
+
+		100% {
+			transform: translateX(0px);
+			timing-function: ease-in;
+		}
+	}
 }

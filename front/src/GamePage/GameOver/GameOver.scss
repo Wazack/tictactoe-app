@@ -1,0 +1,45 @@
+.gameover {
+    color: #FFFF;
+    height: 181px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: #763AD6;
+    border-radius: 10px;
+	max-width: 348px;
+    margin: 13px auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    h2 {
+        border-radius: 10px;
+        padding: 10px 119px;
+        font-size: 22px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        background: #3F2C82;
+        svg {
+            width: 48px;
+        }
+    }
+    button {
+        all: unset;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        position: relative;
+        // top: -4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #3F2C82;
+        border-radius: 50%;
+        padding: 10px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        &:hover {
+            padding: 15px;
+            // top: -9px;
+        }
+        svg {
+            width: 47px;
+            margin: auto;
+        }
+    }
+}

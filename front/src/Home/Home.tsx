@@ -15,7 +15,7 @@ function Home() {
                 <button onClick={() =>setDifficulty(3)}>Against a developer</button>
                 <button>How to play ?</button>
             </div> :
-            <GamePage difficulty={difficulty} />
+            <GamePage difficulty={difficulty} setDifficulty={setDifficulty} />
             }
         </>
     )

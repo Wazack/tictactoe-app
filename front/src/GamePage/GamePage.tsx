@@ -3,11 +3,14 @@ import { useEffect, useState } from 'react';
 import './GamePage.scss';
 import Board from './Board/Board';
 import TypeWord from './TypeWord/TypeWord';
+import GameOver from './GameOver/GameOver';
 
 function GamePage(props: any) {
 
     const [yourTurn, setYourTurn] = useState(false);
-    const [words, setWords] = useState<string[][]>([randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5)])
+    const [isWinner, setIsWinner] = useState(false);
+    const [nameWinner, setNameWinner] = useState<string>();
+    const [words, setWords] = useState<string[][]>([randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5)])
     const [indexWord, setIndexWord] = useState(0);
     const [grid, setGrid] = useState<any[]>([
     0, 1, 2,
@@ -46,8 +49,8 @@ function GamePage(props: any) {
         }
     }
 
-    var huPlayer: string = 'O';
-    var aiPlayer: string = 'X';
+    var huPlayer = 'O';
+    var aiPlayer = 'X';
 
     const emptyIndexies = (board: any) => {
         return board.filter((s: string | number) => s != 'O' && s != 'X')
@@ -102,20 +105,40 @@ function GamePage(props: any) {
         return moves[bestMove];
     }
     
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         var index = minimax_algo(grid, 'X')
-    //         grid[index.index] = 'X'
-    //         setGrid([...grid]);
-    //         setIndexWord(indexWord + 1);
-    //     }, aiSpeed);
-    //     return () => clearInterval(interval);
-    // }, [grid]);
+    useEffect(() => {
+        console.log('Verif win !')
+        if (winning(grid, aiPlayer)) {
+            setIsWinner(true);
+            setNameWinner(aiPlayer);
+        } else if (winning(grid, huPlayer)) {
+            setIsWinner(true);
+            setNameWinner(huPlayer);
+        } else if (emptyIndexies.length === 0) {
+            setIsWinner(true);
+            setNameWinner('Tie');
+        }
+    }, [grid, yourTurn])
+
+    useEffect(() => {
+        if (!isWinner) {
+            console.log('aiSpeed: ' + aiSpeed)
+            const interval = setInterval(() => {
+                var index = minimax_algo(grid, 'X')
+                grid[index.index] = 'X'
+                setGrid([...grid]);
+                setIndexWord(indexWord + 1);
+            }, aiSpeed);
+            return () => clearInterval(interval);
+        }
+    }, [grid]);
 
   return (
     <div className="game-page">
       <Board yourTurn={yourTurn} setYourTurn={setYourTurn} data={grid} />
-      <TypeWord yourTurn={yourTurn} setYourTurn={setYourTurn} words={words}/>
+      {!isWinner ?
+        <TypeWord yourTurn={yourTurn} setYourTurn={setYourTurn} words={words}/>
+        : <GameOver nameWinner={nameWinner} setDifficulty={props.setDifficulty} />
+    }
     </div>
   );
 }
