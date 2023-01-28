@@ -106,14 +106,13 @@ function GamePage(props: any) {
     }
     
     useEffect(() => {
-        console.log('Verif win !')
         if (winning(grid, aiPlayer)) {
             setIsWinner(true);
             setNameWinner(aiPlayer);
         } else if (winning(grid, huPlayer)) {
             setIsWinner(true);
             setNameWinner(huPlayer);
-        } else if (emptyIndexies.length === 0) {
+        } else if (emptyIndexies(grid).length === 0) {
             setIsWinner(true);
             setNameWinner('Tie');
         }
