@@ -12,6 +12,6 @@ Go to "front" folder and run this command
     npm start
     
 ## Screenshot
-<img width="1792" alt="Screenshot 2023-01-28 at 23 15 08" src="https://user-images.githubusercontent.com/68016211/215293577-6169cfef-b0d2-4e53-8315-f2d5ff602653.png">
-<img width="1792" alt="Screenshot 2023-01-28 at 23 16 55" src="https://user-images.githubusercontent.com/68016211/215293600-6bbb4a13-935b-46dd-9449-a253a44ed3b2.png">
-<img width="1792" alt="Screenshot 2023-01-28 at 23 16 14" src="https://user-images.githubusercontent.com/68016211/215293601-02396883-e883-4790-991c-a44e34f3b26b.png">
+<img width="1792" alt="Screenshot 2023-01-29 at 13 27 58" src="https://user-images.githubusercontent.com/68016211/215326213-48646ecd-6b70-4bc7-bd2f-a55c166052f4.png">
+<img width="1792" alt="Screenshot 2023-01-29 at 13 28 22" src="https://user-images.githubusercontent.com/68016211/215326212-578264d2-9148-4cc5-8103-36f0987ae7bb.png">
+<img width="1792" alt="Screenshot 2023-01-29 at 13 29 18" src="https://user-images.githubusercontent.com/68016211/215326202-e02f7d86-a440-4faf-9f25-35289554f1af.png">
