@@ -9,6 +9,9 @@
 	border-radius: 10px;
 	background: #763AD6;
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	&.first-word {
+		animation: apparition-typeword 1s ease-out;
+	}
 	.display-word {
 		font-size: 20px;
 		color: white;
@@ -39,6 +42,19 @@
 		background: #3F2C82;
 		color: white;
 		font-size: 20px;
+	}
+
+	@keyframes apparition-typeword {
+		0% {
+			opacity: 0;
+			transform: translateX(-1000px);
+		} 50% {
+			opacity: 0;
+			transform: translateX(-1000px);
+		} 100% {
+			opacity: 1;
+			transform: translateX(0);
+		}
 	}
 
 	@keyframes bounce {

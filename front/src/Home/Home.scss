@@ -65,4 +65,24 @@
             }
         }
     }
+    .social-links {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        margin-bottom: 10px;
+        gap: 20px;
+        color: white;
+        a {
+            all: unset;
+            background: #000000;
+            padding: 5px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all .3s linear;
+            &:hover {
+                color: #000000;
+                background: white;
+            }
+        }
+    }
 }

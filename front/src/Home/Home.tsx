@@ -34,6 +34,10 @@ function Home() {
                         <button onClick={() =>setDifficulty(3)}>Developer Bot</button>
                     </div>
                 </div>
+                <div className="social-links">
+                    <a href="https://github.com/Wazack" target="_blank">My Github</a>
+                    <a href="https://tsimon.fr" target="_blank">My Portolio</a>
+                </div>
             </div> :
             <GamePage difficulty={difficulty} setDifficulty={setDifficulty} />
             }

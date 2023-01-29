@@ -49,7 +49,7 @@ function TypeWord(props: any) {
     }
 
     return (
-        <div className={`type-word ${props.yourTurn ? "hidden" : ""}`}>
+        <div className={`type-word ${index === 0 ? "first-word" : "tt"} ${props.yourTurn ? "hidden" : ""}`}>
             <div className="display-word">
                 {props.words[index].map((word: string, i: number) => (
                     <span key={i}>
@@ -62,7 +62,7 @@ function TypeWord(props: any) {
                     </span>
                 ))}
             </div>
-            <input ref={inputRef} className={`${!isGoodWord ? "wrong-word" : ""}`} onKeyUp={handleKeyDown} onChange={(e) => { setInputValue(e.currentTarget.value); if (!isGoodWord) setIsGoodWord(true) }} value={inputValue} type="text" />
+            <input autoComplete="false" ref={inputRef} className={`${!isGoodWord ? "wrong-word" : ""}`} onKeyUp={handleKeyDown} onChange={(e) => { setInputValue(e.currentTarget.value); if (!isGoodWord) setIsGoodWord(true) }} value={inputValue} type="text" />
         </div>
     )
 }

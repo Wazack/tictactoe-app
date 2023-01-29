@@ -4,6 +4,7 @@ import './GamePage.scss';
 import Board from './Board/Board';
 import TypeWord from './TypeWord/TypeWord';
 import GameOver from './GameOver/GameOver';
+import Players from './Players/Players';
 
 function GamePage(props: any) {
 
@@ -12,10 +13,12 @@ function GamePage(props: any) {
     const [nameWinner, setNameWinner] = useState<string>();
     const [words, setWords] = useState<string[][]>([randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5), randomWords(5)])
     const [indexWord, setIndexWord] = useState(0);
+    const [huPlayer, setHuPlayer] = useState('O')
+    const [aiPlayer, setAiPlayer] = useState('X')
     const [grid, setGrid] = useState<any[]>([
-    0, 1, 2,
-    3, 4, 5,
-    6, 7, 8
+        0, 1, 2,
+        3, 4, 5,
+        6, 7, 8
     ]);
 
     var aiSpeed = 10000;
@@ -32,25 +35,22 @@ function GamePage(props: any) {
         aiSpeed = lengthWords * 60000 / 250
     }
 
-    function winning(board: any, player: string){
+    function winning(board: any, player: string) {
         if (
-        (board[0] == player && board[1] == player && board[2] == player) ||
-        (board[3] == player && board[4] == player && board[5] == player) ||
-        (board[6] == player && board[7] == player && board[8] == player) ||
-        (board[0] == player && board[3] == player && board[6] == player) ||
-        (board[1] == player && board[4] == player && board[7] == player) ||
-        (board[2] == player && board[5] == player && board[8] == player) ||
-        (board[0] == player && board[4] == player && board[8] == player) ||
-        (board[2] == player && board[4] == player && board[6] == player)
+            (board[0] == player && board[1] == player && board[2] == player) ||
+            (board[3] == player && board[4] == player && board[5] == player) ||
+            (board[6] == player && board[7] == player && board[8] == player) ||
+            (board[0] == player && board[3] == player && board[6] == player) ||
+            (board[1] == player && board[4] == player && board[7] == player) ||
+            (board[2] == player && board[5] == player && board[8] == player) ||
+            (board[0] == player && board[4] == player && board[8] == player) ||
+            (board[2] == player && board[4] == player && board[6] == player)
         ) {
-        return true;
+            return true;
         } else {
-        return false;
+            return false;
         }
     }
-
-    var huPlayer = 'O';
-    var aiPlayer = 'X';
 
     const emptyIndexies = (board: any) => {
         return board.filter((s: string | number) => s != 'O' && s != 'X')
@@ -60,16 +60,16 @@ function GamePage(props: any) {
         var availSpots = emptyIndexies(newGrid);
 
         if (winning(newGrid, huPlayer))
-            return {index: -1, score: -10};
+            return { index: -1, score: -10 };
         else if (winning(newGrid, aiPlayer))
-            return {index: -1, score: 10};
+            return { index: -1, score: 10 };
         else if (availSpots.length == 0)
-            return {index: -1, score: 0};
-        
+            return { index: -1, score: 0 };
+
         var moves = [];
 
         for (var i = 0; i < availSpots.length; i++) {
-            var move = {index: 0, score: 0};
+            var move = { index: 0, score: 0 };
             move.index = newGrid[availSpots[i]]
             newGrid[availSpots[i]] = player;
             if (player == aiPlayer) {
@@ -87,7 +87,7 @@ function GamePage(props: any) {
         var bestMove = 0;
         if (player == aiPlayer) {
             var bestScore = -10000;
-            for (var i = 0; i < moves.length; i++){
+            for (var i = 0; i < moves.length; i++) {
                 if (moves[i].score > bestScore) {
                     bestScore = moves[i].score;
                     bestMove = i;
@@ -104,7 +104,7 @@ function GamePage(props: any) {
         }
         return moves[bestMove];
     }
-    
+
     useEffect(() => {
         if (winning(grid, aiPlayer)) {
             setIsWinner(true);
@@ -120,10 +120,9 @@ function GamePage(props: any) {
 
     useEffect(() => {
         if (!isWinner) {
-            console.log('aiSpeed: ' + aiSpeed)
             const interval = setInterval(() => {
-                var index = minimax_algo(grid, 'X')
-                grid[index.index] = 'X'
+                var index = minimax_algo(grid, aiPlayer)
+                grid[index.index] = aiPlayer
                 setGrid([...grid]);
                 setIndexWord(indexWord + 1);
             }, aiSpeed);
@@ -131,15 +130,16 @@ function GamePage(props: any) {
         }
     }, [grid]);
 
-  return (
-    <div className="game-page">
-      <Board yourTurn={yourTurn} setYourTurn={setYourTurn} data={grid} />
-      {!isWinner ?
-        <TypeWord yourTurn={yourTurn} setYourTurn={setYourTurn} words={words}/>
-        : <GameOver nameWinner={nameWinner} setDifficulty={props.setDifficulty} />
-    }
-    </div>
-  );
+    return (
+        <div className="game-page">
+            <Players huPlayer={huPlayer} aiPlayer={aiPlayer} />
+            <Board yourTurn={yourTurn} setYourTurn={setYourTurn} data={grid} />
+            {!isWinner ?
+                <TypeWord yourTurn={yourTurn} setYourTurn={setYourTurn} words={words} />
+                : <GameOver nameWinner={nameWinner} setDifficulty={props.setDifficulty} />
+            }
+        </div>
+    );
 }
 
 export default GamePage;
