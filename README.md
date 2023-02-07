@@ -7,9 +7,7 @@ This Tic Tac Toe Remastered is against an IA whose goal is to type a series of w
     
 ## Usage
 
-Go to "front" folder and run this command
-
-    npm start
+Go to https://tictactoe.tsimon.fr
     
 ## Screenshot
 <img width="1792" alt="Screenshot 2023-01-29 at 13 27 58" src="https://user-images.githubusercontent.com/68016211/215326213-48646ecd-6b70-4bc7-bd2f-a55c166052f4.png">
